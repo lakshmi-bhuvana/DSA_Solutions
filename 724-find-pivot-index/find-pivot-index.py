@@ -8,6 +8,7 @@ class Solution:
             right_sum-=pivot
             if left_sum==right_sum:
                 return i
+                
             left_sum+=pivot
               
         return -1
