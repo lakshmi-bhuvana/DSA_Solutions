@@ -5,7 +5,6 @@ class Solution:
         for num in nums:
             digits=0
             while num!=0:
-                temp=num%10
                 num=num//10
                 digits+=1
             if digits%2==0:
