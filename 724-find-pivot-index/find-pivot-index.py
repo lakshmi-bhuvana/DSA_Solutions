@@ -10,9 +10,6 @@ class Solution:
                 return i
 
             left_sum+=pivot
-            
-
-            
-                
+              
         return -1
         
