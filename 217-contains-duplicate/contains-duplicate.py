@@ -4,5 +4,4 @@ class Solution:
 
         if len(uni)!=len(nums):
             return True
-        else:
-            return False
+        return False
