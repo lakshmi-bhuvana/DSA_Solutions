@@ -1,25 +1,64 @@
 class Solution {
     public String shortestBeautifulSubstring(String s, int k) {
-        int min = Integer.MAX_VALUE;
-        String res = "";
-        for(int i = 0; i<s.length(); i++) {
-            int count = 0;
-            int c = 0;
-            String ans = "";
-            for(int j = i; j<s.length(); j++) {
-                char ch = s.charAt(j);
-                c++;
-                ans += ch;
-                if(ch == '1')  count++;
-                if(count > k)  break; 
-                if(count == k) {
-                    if(min > c || min == c && ans.compareTo(res) < 0) {
-                        min = c;
-                        res = ans;
+        char[] sChar = s.toCharArray();
+        int start = 0;
+        int end = 0;
+        int count = 0;
+        int[] smallest = new int[3];
+
+        for (int i = 0; i < s.length(); i++) {
+            end++;
+
+            if (sChar[i] == '1') {
+                count++;
+            }
+
+            while (count >= k && start < end) {
+
+                if (smallest[0] == 0 || (end - start) < smallest[0]) {
+                    smallest[0] = end - start;
+                    smallest[1] = start;
+                    smallest[2] = end;
+                } else if ((end - start) == smallest[0]) {
+
+                    String previousSubString =
+                            s.substring(smallest[1], smallest[2]);
+
+                    String currentSubString =
+                            s.substring(start, end);
+
+                    if (isCurrentSmaller(previousSubString, currentSubString)) {
+                        smallest[0] = end - start;
+                        smallest[1] = start;
+                        smallest[2] = end;
                     }
-                }  
+                }
+
+                if (sChar[start] == '1') {
+                    count--;
+                }
+
+                start++;
             }
         }
-        return res;
+
+        return s.substring(smallest[1], smallest[2]);
+    }
+
+    private boolean isCurrentSmaller(String previousSubString,
+                                     String currentSubString) {
+
+        for (int i = 0; i < currentSubString.length(); i++) {
+
+            if (previousSubString.charAt(i)
+                    < currentSubString.charAt(i)) {
+                return false;
+            } else if (previousSubString.charAt(i)
+                    > currentSubString.charAt(i)) {
+                return true;
+            }
+        }
+
+        return true;
     }
 }
