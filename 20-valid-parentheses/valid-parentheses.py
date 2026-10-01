@@ -1,2 +1,18 @@
 class Solution:
-    def isValid(self, s): return not __import__('functools').reduce(lambda st,c: st+c if c in '([{' else st[:-1] if st and st[-1]=={')':'(',']':'[','}':'{'}[c] else st+'#', s, '')
+    def isValid(self, s: str) -> bool:
+        i=0
+        a=[]
+        for i in range(len(s)):
+            if s[i] == '(' or s[i] == '[' or s[i] == '{':
+                a.append(s[i])
+            else:
+                if not a:
+                    return False
+                top=a.pop()
+                if s[i] == ')' and top!='(':
+                    return False
+                if s[i] == ']' and top!='[':
+                    return False
+                if s[i] == '}' and top!='{':
+                    return False
+        return len(a)==0
